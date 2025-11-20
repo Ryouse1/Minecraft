@@ -5,17 +5,17 @@ app = Flask(__name__)
 # ファイル情報（Google Drive 直接ダウンロードリンク + アイコン指定）
 files = [
     {
-        "name": "Minecraft 3D v0.6 Linux.zip",
+        "name": "Minecraft-3D-v0.6-Linux.zip",
         "url": "https://drive.google.com/uc?export=download&id=1JDe6kQZyfRnhoId0mTPItnmoOg2J2BN6",
         "icon": "linux.JPG"
     },
     {
-        "name": "Minecraft 3D v0.6 macOS.zip",
+        "name": "Minecraft-3D-v0.6-macOS.zip",
         "url": "https://drive.google.com/uc?export=download&id=1ku_Gq08kvf59dY1pRuqnZ6rRfzn_YPhe",
         "icon": "macos.PNG"
     },
     {
-        "name": "Minecraft 3D v0.6 windows.zip",
+        "name": "Minecraft-3D-v0.6-windows.zip",
         "url": "https://drive.google.com/uc?export=download&id=1nN9vsgJxLADsdbV-Q_AFz5Nbsy5xR37z",
         "icon": "windows.PNG"
     }
