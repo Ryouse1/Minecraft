@@ -1,38 +1,41 @@
 from flask import Flask, render_template_string, redirect
+import urllib.parse
 
 app = Flask(__name__)
 
-# ファイル情報（Google Drive 直接ダウンロードリンク + アイコン指定）
 files = [
     {
         "name": "Minecraft 3D v0.6 Linux.zip",
         "url": "https://drive.google.com/uc?export=download&id=1JDe6kQZyfRnhoId0mTPItnmoOg2J2BN6",
-        "icon": "linux.JPG"
+        "icon": "linux.JPG",
     },
     {
         "name": "Minecraft 3D v0.6 macOS.zip",
         "url": "https://drive.google.com/uc?export=download&id=1ku_Gq08kvf59dY1pRuqnZ6rRfzn_YPhe",
-        "icon": "macos.PNG"
+        "icon": "macos.PNG",
     },
     {
         "name": "Minecraft 3D v0.6 windows.zip",
         "url": "https://drive.google.com/uc?export=download&id=1nN9vsgJxLADsdbV-Q_AFz5Nbsy5xR37z",
-        "icon": "windows.PNG"
-    }
+        "icon": "windows.PNG",
+    },
 ]
+
+# ファイルごとに安全な URL 用スラッグを作る
+for f in files:
+    f["slug"] = urllib.parse.quote(f["name"])
 
 @app.route("/")
 def index():
-    file_cards = ''
+    file_cards = ""
     for f in files:
-        # URL エンコード不要、Flask側で path converter で受け取る
         file_cards += f'''
         <div class="file-card">
             <img src="/static/icons/{f["icon"]}" alt="icon" class="file-icon">
             <div class="file-info">
                 <div class="file-name">{f["name"]}</div>
             </div>
-            <a class="download-btn" href="/files/{f["name"]}">Download</a>
+            <a class="download-btn" href="/files/{f["slug"]}">Download</a>
         </div>
         '''
     return render_template_string(f'''
@@ -110,9 +113,10 @@ h1 {{
 </html>
 ''')
 
-# 修正ポイント：path converter に変更
-@app.route("/files/<path:filename>")
-def download(filename):
+@app.route("/files/<slug>")
+def download(slug):
+    # URL デコードして元のファイル名に戻す
+    filename = urllib.parse.unquote(slug)
     file = next((f for f in files if f["name"] == filename), None)
     if file:
         return redirect(file["url"])
