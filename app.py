@@ -5,17 +5,17 @@ app = Flask(__name__)
 # ファイル情報（Google Drive 直接ダウンロードリンク + アイコン指定）
 files = [
     {
-        "name": "Minecraft-3D-v0.6-Linux.zip",
+        "name": "Minecraft 3D v0.6 Linux.zip",
         "url": "https://drive.google.com/uc?export=download&id=1JDe6kQZyfRnhoId0mTPItnmoOg2J2BN6",
         "icon": "linux.JPG"
     },
     {
-        "name": "Minecraft-3D-v0.6-macOS.zip",
+        "name": "Minecraft 3D v0.6 macOS.zip",
         "url": "https://drive.google.com/uc?export=download&id=1ku_Gq08kvf59dY1pRuqnZ6rRfzn_YPhe",
         "icon": "macos.PNG"
     },
     {
-        "name": "Minecraft-3D-v0.6-windows.zip",
+        "name": "Minecraft 3D v0.6 windows.zip",
         "url": "https://drive.google.com/uc?export=download&id=1nN9vsgJxLADsdbV-Q_AFz5Nbsy5xR37z",
         "icon": "windows.PNG"
     }
@@ -25,6 +25,7 @@ files = [
 def index():
     file_cards = ''
     for f in files:
+        # URL エンコード不要、Flask側で path converter で受け取る
         file_cards += f'''
         <div class="file-card">
             <img src="/static/icons/{f["icon"]}" alt="icon" class="file-icon">
@@ -109,7 +110,8 @@ h1 {{
 </html>
 ''')
 
-@app.route("/files/<filename>")
+# 修正ポイント：path converter に変更
+@app.route("/files/<path:filename>")
 def download(filename):
     file = next((f for f in files if f["name"] == filename), None)
     if file:
