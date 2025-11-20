@@ -2,6 +2,7 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
+# ファイル情報（直接リンク + アイコン）
 files = [
     {
         "name": "Minecraft 3D v0.6 Linux.zip",
@@ -38,7 +39,7 @@ def index():
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>minecraft scratch-edition downloader</title>
+<title>Minecraft Scratch Downloader</title>
 <style>
 body {{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -102,7 +103,7 @@ h1 {{
 </style>
 </head>
 <body>
-<h1>minecraft scratch downloader</h1>
+<h1>Minecraft Scratch Downloader</h1>
 {file_cards}
 </body>
 </html>
