@@ -1,20 +1,23 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, redirect
 
 app = Flask(__name__)
 
-# ファイル情報（直接リンク + アイコン）
+# ファイル情報（ID で管理）
 files = [
     {
+        "id": 1,
         "name": "Minecraft 3D v0.6 Linux.zip",
         "url": "https://drive.google.com/uc?export=download&id=1JDe6kQZyfRnhoId0mTPItnmoOg2J2BN6",
         "icon": "linux.JPG",
     },
     {
+        "id": 2,
         "name": "Minecraft 3D v0.6 macOS.zip",
         "url": "https://drive.google.com/uc?export=download&id=1ku_Gq08kvf59dY1pRuqnZ6rRfzn_YPhe",
         "icon": "macos.PNG",
     },
     {
+        "id": 3,
         "name": "Minecraft 3D v0.6 windows.zip",
         "url": "https://drive.google.com/uc?export=download&id=1nN9vsgJxLADsdbV-Q_AFz5Nbsy5xR37z",
         "icon": "windows.PNG",
@@ -31,7 +34,7 @@ def index():
             <div class="file-info">
                 <div class="file-name">{f["name"]}</div>
             </div>
-            <a class="download-btn" href="{f["url"]}" target="_blank" rel="noopener noreferrer">Download</a>
+            <a class="download-btn" href="/files/{f["id"]}">Download</a>
         </div>
         '''
     return render_template_string(f'''
@@ -108,6 +111,13 @@ h1 {{
 </body>
 </html>
 ''')
+
+@app.route("/files/<int:file_id>")
+def download(file_id):
+    file = next((f for f in files if f["id"] == file_id), None)
+    if file:
+        return redirect(file["url"])
+    return "File not found", 404
 
 if __name__ == "__main__":
     import os
