@@ -26,15 +26,14 @@ files = [
 def index():
     file_cards = ""
     for f in files:
-        # URL にスペースなどが入る場合はエンコード
-        url_path = urllib.parse.quote(f["name"])
+        url_path = urllib.parse.quote(f["name"])  # URL エンコード
         file_cards += f'''
         <div class="file-card">
             <img src="/static/icons/{f["icon"]}" alt="icon" class="file-icon">
             <div class="file-info">
                 <div class="file-name">{f["name"]}</div>
             </div>
-            <a class="download-btn" href="/files/{url_path}">Download</a>
+            <a class="download-btn" href="/files/{url_path}" target="_blank">Download</a>
         </div>
         '''
     return render_template_string(f'''
