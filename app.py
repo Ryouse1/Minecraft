@@ -5,18 +5,18 @@ app = Flask(__name__)
 # ファイル情報（Google Drive 直接ダウンロードリンク + アイコン指定）
 files = [
     {
-        "name": "☁️ Megaserver among us linux.zip",
-        "url": "https://drive.google.com/uc?export=download&id=1rmResHDnTEIUlKvYAgOBHqCiDWzCM_dd",
+        "name": "Minecraft 3D v0.6 Linux.zip",
+        "url": "https://drive.google.com/uc?export=download&id=1JDe6kQZyfRnhoId0mTPItnmoOg2J2BN6",
         "icon": "linux.JPG"
     },
     {
-        "name": "☁️ megaserver among us.app",
-        "url": "https://drive.google.com/uc?export=download&id=1waRVeJ4BoFsVysf7IR38B2xfgikgGA7x",
+        "name": "Minecraft 3D v0.6 macOS.zip",
+        "url": "https://drive.google.com/uc?export=download&id=1ku_Gq08kvf59dY1pRuqnZ6rRfzn_YPhe",
         "icon": "macos.PNG"
     },
     {
-        "name": "☁️ Megaserver among us windows.exe",
-        "url": "https://drive.google.com/uc?export=dowbload&id=19-55muWBpS4lGo6OHSAC_fN_YNdKJeQp",
+        "name": "Minecraft 3D v0.6 windows.zip",
+        "url": "https://drive.google.com/uc?export=download&id=1nN9vsgJxLADsdbV-Q_AFz5Nbsy5xR37z",
         "icon": "windows.PNG"
     }
 ]
