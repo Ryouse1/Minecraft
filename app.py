@@ -33,7 +33,7 @@ def index():
             <div class="file-info">
                 <div class="file-name">{f["name"]}</div>
             </div>
-            <a class="download-btn" href="/files/{url_path}" target="_blank">Download</a>
+            <button class="download-btn" onclick="window.open('/files/{url_path}', '_blank')">Download</button>
         </div>
         '''
     return render_template_string(f'''
@@ -80,7 +80,8 @@ h1 {{
 .download-btn {{
     background: #007bff;
     color: #fff;
-    text-decoration: none;
+    border: none;
+    cursor: pointer;
     padding: 8px 15px;
     border-radius: 5px;
     transition: 0.3s;
