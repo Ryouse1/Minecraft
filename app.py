@@ -1,7 +1,9 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, redirect
+import urllib.parse
 
 app = Flask(__name__)
 
+# ファイル情報
 files = [
     {
         "name": "Minecraft 3D v0.6 Linux.zip",
@@ -24,16 +26,17 @@ files = [
 def index():
     file_cards = ""
     for f in files:
+        # URL にスペースなどが入る場合はエンコード
+        url_path = urllib.parse.quote(f["name"])
         file_cards += f'''
         <div class="file-card">
             <img src="/static/icons/{f["icon"]}" alt="icon" class="file-icon">
             <div class="file-info">
                 <div class="file-name">{f["name"]}</div>
             </div>
-            <button class="download-btn" data-url="{f["url"]}">Download</button>
+            <a class="download-btn" href="/files/{url_path}">Download</a>
         </div>
         '''
-
     return render_template_string(f'''
 <!DOCTYPE html>
 <html lang="ja">
@@ -78,8 +81,7 @@ h1 {{
 .download-btn {{
     background: #007bff;
     color: #fff;
-    border: none;
-    cursor: pointer;
+    text-decoration: none;
     padding: 8px 15px;
     border-radius: 5px;
     transition: 0.3s;
@@ -106,20 +108,18 @@ h1 {{
 <body>
 <h1>Minecraft Scratch Downloader</h1>
 {file_cards}
-
-<script>
-document.querySelectorAll('.download-btn').forEach(btn => {{
-    btn.addEventListener('click', () => {{
-        const url = btn.getAttribute('data-url');
-        // URLデコードして飛ばす
-        window.location.href = decodeURIComponent(url);
-    }});
-}});
-</script>
-
 </body>
 </html>
 ''')
+
+@app.route("/files/<path:filename>")
+def download(filename):
+    # URL デコードして元のファイル名に戻す
+    original_name = urllib.parse.unquote(filename)
+    file = next((f for f in files if f["name"] == original_name), None)
+    if file:
+        return redirect(file["url"])
+    return "File not found", 404
 
 if __name__ == "__main__":
     import os
